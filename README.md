@@ -19,6 +19,7 @@ Seaborn
 
 NumPy
 
+```bash 
 pip install streamlit pandas matplotlib seaborn numpy
 
  Menjalankan Dashboard
