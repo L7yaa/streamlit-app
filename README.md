@@ -32,5 +32,9 @@ Sebelum menjalankan dashboard, pastikan Anda telah menginstal:
 ```bash
 pip install streamlit pandas matplotlib seaborn numpy
 
+pip install -r requirements.txt
+
 streamlit run dashboard.py
+
+
 
