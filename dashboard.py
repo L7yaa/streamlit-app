@@ -13,74 +13,50 @@ st.subheader("Upload Data Files")
 uploaded_day = st.file_uploader("Upload day.csv", type=["csv"])
 uploaded_hour = st.file_uploader("Upload hour.csv", type=["csv"])
 
-# Weather descriptions
-weather_dict = {
-    1: "Clear, Few clouds, Partly cloudy",
-    2: "Mist + Cloudy, Mist + Broken clouds, Mist + Few clouds, Mist",
-    3: "Light Snow, Light Rain + Thunderstorm + Scattered clouds, Light Rain + Scattered clouds",
-    4: "Heavy Rain + Ice Pallets + Thunderstorm + Mist, Snow + Fog"
-}
-
-if uploaded_day is not None and uploaded_hour is not None:
-    df_day = pd.read_csv(uploaded_day)
-    df_hour = pd.read_csv(uploaded_hour)
+if uploaded_day and uploaded_hour:
+    try:
+        df_day = pd.read_csv(uploaded_day)
+        df_hour = pd.read_csv(uploaded_hour)
+        
+        st.subheader("Day Dataset Preview")
+        st.dataframe(df_day.head())
+        
+        st.subheader("Hour Dataset Preview")
+        st.dataframe(df_hour.head())
+        
+        # Ensure required columns exist
+        required_columns = {'weathersit', 'cnt', 'hr', 'weekday'}
+        if not required_columns.issubset(df_day.columns) or not required_columns.issubset(df_hour.columns):
+            st.error("Missing required columns in the uploaded files.")
+        else:
+            # Visualizations
+            st.subheader("Bike Rentals by Weather Condition (Day Dataset)")
+            fig, ax = plt.subplots(figsize=(10, 6))
+            sns.boxplot(x='weathersit', y='cnt', data=df_day, ax=ax)
+            ax.set_title("Bike Rentals by Weather Condition (Day Dataset)")
+            st.pyplot(fig)
+            
+            # Correlation Heatmap
+            st.subheader("Correlation Heatmap for Day Dataset")
+            correlation_day = df_day.corr(numeric_only=True)
+            fig, ax = plt.subplots(figsize=(10, 8))
+            sns.heatmap(correlation_day, annot=True, cmap='coolwarm', fmt='.2f', linewidths=0.5, ax=ax)
+            ax.set_title("Correlation Heatmap for Day Dataset")
+            st.pyplot(fig)
+            
+            # Weather condition descriptions
+            weather_descriptions = {
+                1: "Cerah",
+                2: "Cerah Berawan",
+                3: "Mendung",
+                4: "Hujan"
+            }
+            
+            st.subheader("Weather Condition Descriptions")
+            for key, desc in weather_descriptions.items():
+                st.write(f"**Condition {key}:** {desc}")
     
-    st.subheader("Day Dataset Preview")
-    st.dataframe(df_day.head())
-    
-    st.subheader("Hour Dataset Preview")
-    st.dataframe(df_hour.head())
-    
-    # Add Weather Description
-    st.subheader("Weather Conditions")
-    for key, value in weather_dict.items():
-        st.write(f"**{key}**: {value}")
-    
-    # Bike Rentals by Weather Condition (Day Dataset)
-    st.subheader("Bike Rentals by Weather Condition (Day Dataset)")
-    fig, ax = plt.subplots(figsize=(10, 6))
-    sns.boxplot(x='weathersit', y='cnt', data=df_day, ax=ax)
-    ax.set_title("Bike Rentals by Weather Condition (Day Dataset)")
-    ax.set_xlabel("Weather Condition")
-    ax.set_ylabel("Bike Rentals (cnt)")
-    st.pyplot(fig)
-    
-    # Bike Rentals by Weather Condition (Hour Dataset)
-    st.subheader("Bike Rentals by Weather Condition (Hour Dataset)")
-    fig, ax = plt.subplots(figsize=(10, 6))
-    sns.boxplot(x='weathersit', y='cnt', data=df_hour, ax=ax)
-    ax.set_title("Bike Rentals by Weather Condition (Hour Dataset)")
-    ax.set_xlabel("Weather Condition")
-    ax.set_ylabel("Bike Rentals (cnt)")
-    st.pyplot(fig)
-    
-    # Total Bike Rentals by Hour
-    st.subheader("Total Bike Rentals by Hour of the Day (Hourly Dataset)")
-    grouped_hourly = df_hour.groupby('hr')['cnt'].sum().reset_index()
-    fig, ax = plt.subplots(figsize=(10, 6))
-    sns.lineplot(x='hr', y='cnt', data=grouped_hourly, marker='o', ax=ax)
-    ax.set_title("Total Bike Rentals by Hour of the Day")
-    ax.set_xlabel("Hour of the Day")
-    ax.set_ylabel("Total Bike Rentals (cnt)")
-    ax.set_xticks(range(0, 24))
-    ax.grid(True)
-    st.pyplot(fig)
-    
-    # Correlation Heatmap - Day Dataset
-    st.subheader("Correlation Heatmap for Day Dataset")
-    correlation_day = df_day.corr()
-    fig, ax = plt.subplots(figsize=(10, 8))
-    sns.heatmap(correlation_day, annot=True, cmap='coolwarm', fmt='.2f', linewidths=0.5, ax=ax)
-    ax.set_title("Correlation Heatmap for Day Dataset")
-    st.pyplot(fig)
-    
-    # Correlation Heatmap - Hour Dataset
-    st.subheader("Correlation Heatmap for Hour Dataset")
-    correlation_hour = df_hour.corr()
-    fig, ax = plt.subplots(figsize=(10, 8))
-    sns.heatmap(correlation_hour, annot=True, cmap='coolwarm', fmt='.2f', linewidths=0.5, ax=ax)
-    ax.set_title("Correlation Heatmap for Hour Dataset")
-    st.pyplot(fig)
-    
+    except Exception as e:
+        st.error(f"An error occurred: {e}")
 else:
     st.warning("Please upload both day.csv and hour.csv to proceed.")
