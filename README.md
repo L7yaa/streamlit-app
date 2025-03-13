@@ -1,81 +1,95 @@
 # Bike rental Dashboard
-Fitur
-
-Upload File CSV: Mengunggah file day.csv dan hour.csv.
-
-Preview Dataset: Menampilkan 5 baris pertama dari dataset harian dan per jam.
-
-Visualisasi Data:
-
-Boxplot penyewaan sepeda berdasarkan kondisi cuaca.
-
-Grafik garis jumlah total penyewaan berdasarkan jam dalam sehari.
-
-Heatmap korelasi antar variabel.
-
-Keterangan Cuaca: Menampilkan arti kode cuaca dari dataset.
-
-Persyaratan
-
-Sebelum menjalankan aplikasi, pastikan sistem Anda memiliki:
-
-Python 3.7 atau lebih baru
-
-Paket Python yang diperlukan:
-
-pandas
-
-matplotlib
-
-seaborn
-
-streamlit
-
-Untuk menginstal semua dependensi, jalankan perintah berikut:
-
-pip install pandas matplotlib seaborn streamlit
+Dashboard ini dirancang untuk menganalisis data peminjaman sepeda berdasarkan faktor cuaca dan waktu. Menggunakan Streamlit, Pandas, Seaborn, dan Matplotlib untuk menyajikan berbagai visualisasi yang membantu dalam memahami pola penggunaan sepeda.
 
 Cara Menjalankan Dashboard
 
-Clone atau Unduh Repositori
+-Persyaratan-
 
-git clone https://github.com/username/bike-rental-dashboard.git
-cd bike-rental-dashboard
+Sebelum menjalankan dashboard, pastikan Anda telah menginstal:
 
-Jalankan Streamlit
+Python (>=3.7)
 
+Streamlit
+
+Pandas
+
+Matplotlib
+
+Seaborn
+
+NumPy
+
+pip install streamlit pandas matplotlib seaborn numpy
+
+ Menjalankan Dashboard
+
+Simpan script Python dashboard (dashboard.py).
+
+Buka terminal atau command prompt.
+
+Arahkan ke direktori tempat file disimpan.
+
+Jalankan perintah berikut:
 streamlit run dashboard.py
 
-Unggah File Data
+Dashboard akan terbuka di browser secara otomatis.
 
-day.csv: Data penyewaan sepeda harian
 
-hour.csv: Data penyewaan sepeda per jam
 
-Eksplorasi Data & Visualisasi
+-Upload Dataset-
 
-Lihat preview dataset
+Dashboard memerlukan dua file CSV:
 
-Analisis tren penyewaan berdasarkan cuaca dan waktu
+day.csv: Berisi data peminjaman sepeda per hari.
 
-Struktur Direktori
+hour.csv: Berisi data peminjaman sepeda per jam.
 
-📂 bike-rental-dashboard
- ├── 📄 dashboard.py         # Kode utama aplikasi Streamlit
- ├── 📄 README.md            # Dokumentasi
- ├── 📂 data                 # Direktori untuk menyimpan dataset (opsional)
- ├── 📄 requirements.txt      # Daftar dependensi (opsional)
+Cara upload:
 
-Penjelasan Kode Cuaca
+Klik tombol Browse files pada bagian "Upload Data Files".
 
-Dataset weathersit memiliki kode berikut:
+Pilih file day.csv dan hour.csv.
 
-1 = Cuaca Cerah / Berawan Ringan
+Data akan otomatis ditampilkan jika format sesuai.
 
-2 = Kabut + Berawan / Mendung
 
-3 = Hujan Ringan / Salju Ringan
 
-4 = Hujan Lebat / Salju Lebat / Badai
+-Fitur Dashboard-
 
-Pastikan Anda mengunggah file CSV dengan format yang sesuai agar dashboard berjalan dengan baik. 🚴‍♂️
+1️⃣ Preview Dataset
+
+Menampilkan 5 baris pertama dari day.csv dan hour.csv untuk memastikan data terupload dengan benar.
+
+2️⃣ Weather Condition Overview 🌦️
+
+Menampilkan kondisi cuaca dalam bentuk teks berdasarkan kolom weathersit.
+
+3️⃣ Daily Bike Rental Trends 📅
+
+Visualisasi jumlah peminjaman sepeda per hari menggunakan line chart.
+
+4️⃣ Hourly Bike Rental Trends 🕒
+
+Visualisasi jumlah peminjaman sepeda per jam dalam satu hari menggunakan line chart.
+
+5️⃣ Heatmap: Bike Rentals by Hour and Weekday 🔥
+
+Menampilkan jumlah peminjaman sepeda berdasarkan jam dan hari dalam seminggu menggunakan heatmap.
+
+6️⃣ Weather Factors vs Bike Rentals 🌡️
+
+Scatter plot hubungan antara suhu dan jumlah peminjaman sepeda.
+
+7️⃣ User Distribution by Weather Condition ☁️
+
+Histogram distribusi jumlah pengguna berdasarkan kondisi cuaca.
+
+8️⃣ Casual vs Registered Users 👥
+
+Menampilkan pie chart perbandingan pengguna kasual dan pengguna terdaftar.
+
+9️⃣ Bike Rentals: Workday vs Weekend 📆
+
+Bar chart membandingkan jumlah peminjaman sepeda pada hari kerja vs akhir pekan.
+
+Dashboard ini membantu dalam memahami pola peminjaman sepeda berdasarkan faktor cuaca dan waktu. Dengan visualisasi yang interaktif, pengguna dapat menganalisis tren peminjaman dan membuat keputusan berdasarkan data.
